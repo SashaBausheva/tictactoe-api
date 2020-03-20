@@ -30,6 +30,7 @@ const router = express.Router()
 // INDEX
 // GET /games
 router.get('/games/:over?', requireToken, (req, res, next) => {
+  // if (typeof req.params.over !== 'undefined' || typeof req.params.over !== 'boolean') next()
   const query = req.params.over === undefined ? {} : { over: req.params.over }
   Game.find(query)
     .then(games => {
@@ -46,7 +47,7 @@ router.get('/games/:over?', requireToken, (req, res, next) => {
 
 // SHOW
 // GET /games/5a7db6c74d55bc51bdf39793
-router.get('/games/:id', requireToken, (req, res, next) => {
+router.get('/test-games/:id', requireToken, (req, res, next) => {
   // req.params.id will be set based on the `:id` in the route
   Game.findById(req.params.id)
     .then(handle404)
@@ -85,11 +86,18 @@ router.patch('/games/:id', requireToken, removeBlanks, (req, res, next) => {
       // it will throw an error if the current user isn't the owner
       requireOwnership(req, game)
 
-      // pass the result of Mongoose's `.update` to the next `.then`
-      return game.updateOne(req.body.game)
+      // Destructure `cell` and `over` from the `game` object on the body
+      const { cell, over } = req.body.game
+      // Replace the current value in the array with the new value
+      game.cells.splice(cell.index, 1, cell.value)
+      // If `over` exists, set it on the game object
+      if (over !== undefined) game.over = over
+
+      // pass the result of Mongoose's `.save` to the next `.then`
+      return game.save()
     })
-    // if that succeeded, return 204 and no JSON
-    .then(() => res.sendStatus(204))
+    // if that succeeded, return 200 and the updated game object
+    .then(game => res.status(200).json({ game: game.toObject() }))
     // if an error occurs, pass it to the handler
     .catch(next)
 })

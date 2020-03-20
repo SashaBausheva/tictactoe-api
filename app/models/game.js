@@ -4,7 +4,8 @@ const gameSchema = new mongoose.Schema({
   cells: {
     type: Array,
     required: true,
-    default: new Array('')
+    // Default is 9 empty strings to represent each spot in the game board
+    default: ['', '', '', '', '', '', '', '', '']
   },
   over: {
     type: Boolean,
