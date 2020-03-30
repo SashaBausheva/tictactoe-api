@@ -103,6 +103,23 @@ return an empty games array.
   <td><em>empty</em></td>
 </tr>
 </table>
+<td>PATCH</td>
+<td>`/games/:id`</td>
+<td><strong>game delta</strong></td>
+<td>200, OK</td>
+<td><strong>{}</strong></td>
+</tr>
+<tr>
+  <td colspan="3"></td>
+  <td>400 Bad Request</td>
+  <td><strong>errors</strong></td>
+</tr>
+<tr>
+  <td colspan="3"></td>
+  <td>404 Not Found</td>
+  <td><em>errors</em></td>
+</tr>
+</table>
 
 ## index
 
@@ -177,15 +194,14 @@ set to the user calling `create`, e.g.:
 
 ```json
 {
-  "game": {
-    "id": 3,
-    "cells": ["","","","","","","","",""],
-    "over": false,
-    "player_x": {
-      "id": 1,
-      "email": "and@and.com"
-    },
-    "player_o": null
+  "game":{
+    "cells":["","","","","","","","",""],
+    "over":false,
+    "_id":"an example id",
+    "owner":"an example owner",
+    "createdAt":"an example date",
+    "updatedAt":"an example date",
+    "__v":0
   }
 }
 ```
@@ -201,17 +217,17 @@ contain JSON for the game requested, e.g.:
 
 ```json
 {
-  "game": {
-    "id": 1,
-    "cells": ["o","x","o","x","o","x","o","x","o"],
-    "over": true,
-    "player_x": {
-      "id": 1,
-      "email": "and@and.com"
-    },
-    "player_o": null
+  "game":{
+    "cells":["x","","","","","","","",""],
+    "over":false,
+    "_id":"an example id",
+    "owner":"an example owner",
+    "createdAt":"an example date",
+    "updatedAt":"an example date",
+    "__v":1
   }
 }
+
 ```
 
 ## update
@@ -248,18 +264,38 @@ and the body will be JSON containing the modified game, e.g.:
 
 ```json
 {
-  "game": {
-    "id": 1,
-    "cells": ["x","","","","","","","",""],
+  "game":{
+    "cells":["x","","","","","","","",""],
     "over":false,
-    "player_x": {
-      "id": 1,
-      "email": "and@and.com"
-      },
-    "player_o": null
+    "_id":"an example id",
+    "owner":"an example owner",
+    "createdAt":"an example date",
+    "updatedAt":"an example date",
+    "__v":1
   }
 }
 ```
 
 If the request is unsuccessful, the response will have an HTTP Status of 400 Bad
 Request, and the response body will be JSON describing the errors.
+
+## destroy
+
+The `destroy` action is a *DELETE* specifing the `id` of the game to delete. If the
+request is successful the status will be 200, OK, and the response body will
+contain JSON for the game requested, e.g.:
+
+```json
+{
+  "game":{
+    "cells":["","","","X","","","","",""],
+    "over":false,
+    "_id":"5e823ba98929cc4e95e2f5d9",
+    "owner":"5e82311c8929cc4e95e2f5d8",
+    "createdAt":"2020-03-30T18:34:17.772Z",
+    "updatedAt":"2020-03-30T18:46:41.383Z",
+    "__v":1
+    }
+  }
+
+```

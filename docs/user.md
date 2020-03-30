@@ -106,8 +106,11 @@ user, e.g.:
 ```json
 {
   "user": {
-    "id": 1,
-    "email": "an@example.email"
+    "_id":"an example id",
+    "email":"an@example.com",
+    "createdAt":"an example date",
+    "updatedAt":"an example date",
+    "__v":0
   }
 }
 ```
@@ -144,10 +147,13 @@ used to authenticate other requests, e.g.:
 
 ```json
 {
-  "user": {
-    "id": 1,
-    "email": "an@example.email",
-    "token": "an example authentication token"
+  "user":{
+    "_id":"an example id",
+    "email":"an@example.com",
+    "createdAt":"an example date",
+    "updatedAt":"an example date",
+    "__v":0,
+    "token":"<token>"
   }
 }
 ```
