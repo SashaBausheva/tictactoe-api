@@ -128,26 +128,33 @@ user. The response body will contain JSON containing an array of games, e.g.:
 
 ```json
 {
-  "games": [
+  "games":[
     {
-      "id": 1,
-      "cells": ["o","x","o","x","o","x","o","x","o"],
-      "over": true,
-      "player_x": {
-        "id": 1,
-        "email": "and@and.com"
-      },
-      "player_o": null
+      "cells":["","","","","","","","",""],
+      "over":false,
+      "_id":"an example id",
+      "owner":"an example owner",
+      "createdAt":"an example date",
+      "updatedAt":"an example date",
+      "__v":0
     },
     {
-      "id": 2,
-      "cells": ["","","","","","","","",""],
-      "over": false,
-      "player_x": {
-        "id": 3,
-        "email": "dna@dna.com"
-      },
-      "player_o": null
+      "cells":["","","","","","","","",""],
+      "over":false,
+      "_id":"an example id",
+      "owner":"an example owner",
+      "createdAt":"an example date",
+      "updatedAt":"an example date",
+      "__v":0
+    },
+    {
+      "cells":["","","","","","","","",""],
+      "over":false,
+      "_id":"an example id",
+      "owner":"an example owner",
+      "createdAt":"an example date",
+      "updatedAt":"an example date",
+      "__v":0
     }
   ]
 }
