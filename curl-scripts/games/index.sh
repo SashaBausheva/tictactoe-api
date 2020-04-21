@@ -1,6 +1,6 @@
 #!/bin/sh
 
-API="http://localhost:4741"
+API="https://tic-tac-toe-wdi.herokuapp.com/"
 URL_PATH="/games"
 
 curl "${API}${URL_PATH}" \
