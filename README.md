@@ -9,7 +9,7 @@ The API does not currently validate game states.
 ## API URL
 
 ```js
-  development: 'https://tic-tac-toe-wdi.herokuapp.com/',
+  development: 'https://tic-tac-toe-wdi.herokuapp.com',
   production: 'https://tic-tac-toe-wdi-production.herokuapp.com'
 ```
 
