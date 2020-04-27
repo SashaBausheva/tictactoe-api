@@ -1,7 +1,7 @@
 #!/bin/bash
 
-API="http://localhost:4741"
-URL_PATH="/examples"
+API="https://tic-tac-toe-wdi.herokuapp.com"
+URL_PATH="/games"
 
 curl "${API}${URL_PATH}/${ID}" \
   --include \
@@ -9,8 +9,12 @@ curl "${API}${URL_PATH}/${ID}" \
   --header "Content-Type: application/json" \
 --header "Authorization: Bearer ${TOKEN}" \
 --data '{
-    "example": {
-      "text": "'"${TEXT}"'"
+    "game": {
+      "cell": {
+        "index": "'"${INDEX}"'",
+        "value": "'"${VALUE}"'"
+      },
+      "over": "'"${OVER}"'"
     }
   }'
 
