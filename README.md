@@ -25,7 +25,7 @@ The API does not currently validate game states.
 | POST   | `/games`               | `games#create`    |
 | GET    | `/games/:id`           | `games#show`      |
 | PATCH  | `/games/:id`           | `games#update`    |
-| GET    | `/games/:id/watch`     | `games#watch`     |
+
 All data returned from API actions is formatted as JSON.
 
 ## API Guides
