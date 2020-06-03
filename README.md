@@ -9,7 +9,7 @@ The API does not currently validate game states.
 ## API URL
 
 ```js
-  development: 'https://tic-tac-toe-wdi.herokuapp.com',
+  development: 'https://tic-tac-toe-wdi-development.herokuapp.com',
   production: 'https://tic-tac-toe-wdi-production.herokuapp.com'
 ```
 
@@ -35,9 +35,9 @@ All data returned from API actions is formatted as JSON.
 
 ## Disclaimer
 
-This API may be reset or altered at anytime.  The future of this API may not
+This API may be reset or altered at anytime. The future of this API may not
 align with the current state and therefore the state your client application
-expects.  If you would like to maintain a version of this API in its current
+expects. If you would like to maintain a version of this API in its current
 state for your future use, please fork and clone the repository and launch it
 on heroku.
 
