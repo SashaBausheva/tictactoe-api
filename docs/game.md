@@ -5,11 +5,8 @@ Token token=<token>` or they will be rejected with a status of 401 Unauthorized.
 
 All of the game actions, except for `watch`, follow the *RESTful* style.
 
-Games are associated with users, `player_x` and `player_o`. Actions, other than
-update, will only retrieve a game if the user associated with the
-`Authorization` header is one of those two users. If this requirement is unmet,
-the response will be 404 Not Found, except for the index action which will
-return an empty games array.
+Games are owned by users. Actions will only retrieve a game if the user associated with the `Authorization` header matches the owner's token, which is generated on sign in and deleted on sign out. If this requirement is unmet,
+the response will be 401 Unauthorized.
 
 *Summary:*
 
@@ -132,28 +129,28 @@ user. The response body will contain JSON containing an array of games, e.g.:
     {
       "cells":["","","","","","","","",""],
       "over":false,
-      "_id":"an example id",
-      "owner":"an example owner",
-      "createdAt":"an example date",
-      "updatedAt":"an example date",
+      "_id":"5e823ba98929cc4e95e2f5d9",
+      "owner":"5e82311c8929cc4e95e2f5d8",
+      "createdAt":"2020-03-30T17:30:10.371Z",
+      "updatedAt":"2020-03-30T16:34:27.782Z",
       "__v":0
     },
     {
-      "cells":["","","","","","","","",""],
+      "cells":["x","","","o","","","","",""],
       "over":false,
-      "_id":"an example id",
-      "owner":"an example owner",
-      "createdAt":"an example date",
-      "updatedAt":"an example date",
+      "_id":"5ed7e519659863c00ff4907e",
+      "owner":"5e82311c8929cc4e95e2f5d8",
+      "createdAt":"2020-03-30T16:34:17.792Z",
+      "updatedAt":"2020-03-30T18:37:30.232Z",
       "__v":0
     },
     {
-      "cells":["","","","","","","","",""],
+      "cells":["","o","","","x","o","","x",""],
       "over":false,
-      "_id":"an example id",
-      "owner":"an example owner",
-      "createdAt":"an example date",
-      "updatedAt":"an example date",
+      "_id":"5ed7e526cf104aa275b3ef17",
+      "owner":"5e82311c8929cc4e95e2f5d8",
+      "createdAt":"2020-03-30T15:24:21.743Z",
+      "updatedAt":"2020-03-30T18:39:43.382Z",
       "__v":0
     }
   ]
@@ -196,7 +193,7 @@ End point to fetch all of a user's games that are not over
 
 The `create` action expects a *POST* with an empty body (e.g `''` or `'{}'` if
 JSON). If the request is successful, the response will have an HTTP Status of
-201 Created, and the body will contain JSON of the created game with `player_x`
+201 Created, and the body will contain JSON of the created game with `owner`
 set to the user calling `create`, e.g.:
 
 ```json
@@ -204,17 +201,17 @@ set to the user calling `create`, e.g.:
   "game":{
     "cells":["","","","","","","","",""],
     "over":false,
-    "_id":"an example id",
-    "owner":"an example owner",
-    "createdAt":"an example date",
-    "updatedAt":"an example date",
+    "_id":"5e823ba98929cc4e95e2f5d9",
+    "owner":"5e82311c8929cc4e95e2f5d8",
+    "createdAt":"2020-03-30T18:34:17.772Z",
+    "updatedAt":"2020-03-30T18:34:17.772Z",
     "__v":0
   }
 }
 ```
 
 If the request is unsuccessful, the response will have an HTTP Status of 400 Bad
- Request, and the response body will be JSON describing the errors.
+Request, and the response body will be JSON describing the errors.
 
 ## show
 
@@ -227,10 +224,10 @@ contain JSON for the game requested, e.g.:
   "game":{
     "cells":["x","","","","","","","",""],
     "over":false,
-    "_id":"an example id",
-    "owner":"an example owner",
-    "createdAt":"an example date",
-    "updatedAt":"an example date",
+    "_id":"5e823ba98929cc4e95e2f5d9",
+    "owner":"5e82311c8929cc4e95e2f5d8",
+    "createdAt":"2020-03-30T18:34:17.772Z",
+    "updatedAt":"2020-03-30T18:46:41.383Z",
     "__v":1
   }
 }
@@ -245,7 +242,7 @@ This `update` action expects a *PATCH* with changes to to an existing game.
 
 You may want to store the cell `index` in an HTML element that is not a form.
 To do this, you could utilize data attributes and add the `value` and `over`
-properties using javascript.
+properties using JavaScript.
 
 ```html
 <div data-cell-index='0'>
@@ -274,10 +271,10 @@ and the body will be JSON containing the modified game, e.g.:
   "game":{
     "cells":["x","","","","","","","",""],
     "over":false,
-    "_id":"an example id",
-    "owner":"an example owner",
-    "createdAt":"an example date",
-    "updatedAt":"an example date",
+    "_id":"5e823ba98929cc4e95e2f5d9",
+    "owner":"5e82311c8929cc4e95e2f5d8",
+    "createdAt":"2020-03-30T18:34:17.772Z",
+    "updatedAt":"2020-03-30T18:46:41.383Z",
     "__v":1
   }
 }
@@ -288,14 +285,14 @@ Request, and the response body will be JSON describing the errors.
 
 ## destroy
 
-The `destroy` action is a *DELETE* specifing the `id` of the game to delete. If the
-request is successful the status will be 200, OK, and the response body will
+The `destroy` action is a *DELETE* specifing the `id` of the game to delete. If
+the request is successful the status will be 200, OK, and the response body will
 contain JSON for the game requested, e.g.:
 
 ```json
 {
   "game":{
-    "cells":["","","","X","","","","",""],
+    "cells":["x","","","","","","","",""],
     "over":false,
     "_id":"5e823ba98929cc4e95e2f5d9",
     "owner":"5e82311c8929cc4e95e2f5d8",
