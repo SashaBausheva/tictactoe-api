@@ -29,13 +29,9 @@ const router = express.Router()
 
 // INDEX
 // GET /games
-router.get('/games/:over?', requireToken, (req, res, next) => {
-  if (typeof req.params.over !== 'undefined' && typeof req.params.over !== 'boolean') {
-    next()
-    return
-  }
+router.get('/games', requireToken, (req, res, next) => {
   const query = { owner: req.user.id }
-  if (req.params.over !== undefined) query.over = req.params.over
+  if (req.query.over !== undefined) query.over = req.query.over
   Game.find(query)
     .then(games => {
       // `games` will be an array of Mongoose documents
