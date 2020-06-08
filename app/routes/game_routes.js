@@ -30,8 +30,13 @@ const router = express.Router()
 // INDEX
 // GET /games
 router.get('/games/:over?', requireToken, (req, res, next) => {
-  // if (typeof req.params.over !== 'undefined' || typeof req.params.over !== 'boolean') next()
-  const query = req.params.over === undefined ? {} : { over: req.params.over }
+  console.log('index')
+  if (typeof req.params.over !== 'undefined' || typeof req.params.over !== 'boolean') {
+    next()
+    return
+  }
+  const query = { owner: req.user.id }
+  if (req.params.over !== undefined) query.over = req.params.over
   Game.find(query)
     .then(games => {
       // `games` will be an array of Mongoose documents
@@ -48,11 +53,12 @@ router.get('/games/:over?', requireToken, (req, res, next) => {
 // SHOW
 // GET /games/5a7db6c74d55bc51bdf39793
 router.get('/games/:id', requireToken, (req, res, next) => {
+  console.log('show')
   // req.params.id will be set based on the `:id` in the route
-  Game.findById(req.params.id)
+  Game.find({ _id: req.params.id, owner: req.user.id })
     .then(handle404)
     // if `findById` is succesful, respond with 200 and "game" JSON
-    .then(game => res.status(200).json({ game: game.toObject() }))
+    .then(game => res.status(200).json({ game }))
     // if an error occurs, pass it to the handler
     .catch(next)
 })
