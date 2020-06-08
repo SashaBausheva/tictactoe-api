@@ -30,8 +30,7 @@ const router = express.Router()
 // INDEX
 // GET /games
 router.get('/games/:over?', requireToken, (req, res, next) => {
-  console.log('index')
-  if (typeof req.params.over !== 'undefined' || typeof req.params.over !== 'boolean') {
+  if (typeof req.params.over !== 'undefined' && typeof req.params.over !== 'boolean') {
     next()
     return
   }
@@ -53,7 +52,6 @@ router.get('/games/:over?', requireToken, (req, res, next) => {
 // SHOW
 // GET /games/5a7db6c74d55bc51bdf39793
 router.get('/games/:id', requireToken, (req, res, next) => {
-  console.log('show')
   // req.params.id will be set based on the `:id` in the route
   Game.find({ _id: req.params.id, owner: req.user.id })
     .then(handle404)
