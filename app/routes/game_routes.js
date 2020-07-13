@@ -49,7 +49,7 @@ router.get('/games', requireToken, (req, res, next) => {
 // GET /games/5a7db6c74d55bc51bdf39793
 router.get('/games/:id', requireToken, (req, res, next) => {
   // req.params.id will be set based on the `:id` in the route
-  Game.find({ _id: req.params.id, owner: req.user.id })
+  Game.findOne({ _id: req.params.id, owner: req.user.id })
     .then(handle404)
     // if `findById` is succesful, respond with 200 and "game" JSON
     .then(game => res.status(200).json({ game }))
