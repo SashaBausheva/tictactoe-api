@@ -16,6 +16,9 @@ const handle404 = customErrors.handle404
 // that's owned by someone else
 const requireOwnership = customErrors.requireOwnership
 
+// Throw this error whenever data is not in the correct format
+const UnprocessableDataError = customErrors.UnprocessableDataError
+
 // this is middleware that will remove blank fields from `req.body`, e.g.
 // { game: { title: '', text: 'foo' } } -> { game: { text: 'foo' } }
 const removeBlanks = require('../../lib/remove_blank_fields')
@@ -30,9 +33,7 @@ const router = express.Router()
 // INDEX
 // GET /games
 router.get('/games', requireToken, (req, res, next) => {
-  const query = { owner: req.user.id }
-  if (req.query.over !== undefined) query.over = req.query.over
-  Game.find(query)
+  Game.find({ owner: req.user.id })
     .then(games => {
       // `games` will be an array of Mongoose documents
       // we want to convert each one to a POJO, so we use `.map` to
@@ -85,6 +86,11 @@ router.patch('/games/:id', requireToken, removeBlanks, (req, res, next) => {
       // pass the `req` object and the Mongoose record to `requireOwnership`
       // it will throw an error if the current user isn't the owner
       requireOwnership(req, game)
+
+      // check we have the data we need
+      if (!req.body.game || !req.body.game.cell || !req.body.game.cell.value || req.body.game.cell.index === undefined) {
+        throw new UnprocessableDataError()
+      }
 
       // Destructure `cell` and `over` from the `game` object on the body
       const { cell, over } = req.body.game

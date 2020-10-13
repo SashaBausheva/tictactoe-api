@@ -27,22 +27,12 @@ type, however jQuery.ajax defaults to JSON.
 <td><strong>user</strong></td>
 </tr>
 <tr>
-  <td colspan="4"></td>
-  <td>400 Bad Request</td>
-  <td><em>empty</em></td>
-</tr>
-<tr>
 <td>POST</td>
 <td>`/sign-in`</td>
 <td><strong>credentials</strong></td>
 <td>empty</td>
 <td>200 OK</td>
 <td><strong>user w/token</strong></td>
-</tr>
-<tr>
-  <td colspan="4"></td>
-  <td>401 Unauthorized</td>
-  <td><em>empty</em></td>
 </tr>
 <tr>
 <td>DELETE</td>
@@ -53,11 +43,6 @@ type, however jQuery.ajax defaults to JSON.
 <td>empty</td>
 </tr>
 <tr>
-  <td colspan="4"></td>
-  <td>401 Unauthorized</td>
-  <td><em>empty</em></td>
-</tr>
-<tr>
 <td>PATCH</td>
 <td>`/change-password`</td>
 <td><strong>passwords</strong></td>
@@ -66,9 +51,22 @@ type, however jQuery.ajax defaults to JSON.
 <td><strong>user w/token</strong></td>
 </tr>
 <tr>
-  <td colspan="4"></td>
+  <th colspan="6">Response Errors</th>
+</tr>
+<tr>
+  <th colspan="4">Description</th>
+  <th colspan="1">Status</th>
+  <th colspan="1">Body</th>
+</tr>
+<tr>
+  <td colspan="4">Invalid incoming request data</td>
   <td>400 Bad Request</td>
-  <td><em>empty</em></td>
+  <td>Error object</td>
+</tr>
+<tr>
+  <td colspan="4">Missing or invalid `Authorization` token</td>
+  <td>401 Unauthorized</td>
+  <td>Unauthorized message</td>
 </tr>
 </table>
 
@@ -106,10 +104,10 @@ user, e.g.:
 ```json
 {
   "user": {
-    "_id":"an example id",
-    "email":"an@example.com",
-    "createdAt":"an example date",
-    "updatedAt":"an example date",
+    "_id": "an example id",
+    "email": "an@example.com",
+    "createdAt": "an example date",
+    "updatedAt": "an example date",
     "__v":0
   }
 }
@@ -147,13 +145,13 @@ used to authenticate other requests, e.g.:
 
 ```json
 {
-  "user":{
-    "_id":"an example id",
-    "email":"an@example.com",
-    "createdAt":"an example date",
-    "updatedAt":"an example date",
+  "user": {
+    "_id": "an example id",
+    "email": "an@example.com",
+    "createdAt": "an example date",
+    "updatedAt": "an example date",
     "__v":0,
-    "token":"<token>"
+    "token": "<token>"
   }
 }
 ```
@@ -204,5 +202,5 @@ Request.
 ---
 
 The `sign-out` and `change-password` requests must include a valid HTTP header
-`Authorization: Token token=<token>` or they will be rejected with a status of
-401 Unauthorized.
+`Authorization: Bearer <token>` or they will be rejected with a status of
+`401 Unauthorized`.
