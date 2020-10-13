@@ -26,7 +26,7 @@ generated on sign in and deleted on sign out.
   </tr>
   <tr>
     <td>GET</td>
-    <td><code>/games?over=x</code><br>See <a href="#using-the-over-option">usage examples</a>.</td>
+    <td><code>/games</code></td>
     <td>n/a</td>
     <td>token</td>
     <td>200, OK</td>
@@ -87,7 +87,7 @@ generated on sign in and deleted on sign out.
 </table>
 
 
-## Index `GET /games?over=x`
+## Index `GET /games`
 
 To "index" the games, make a *GET* that retrieves all the games associated with a
 user. The response body will contain JSON containing an array of games, e.g.:
@@ -126,9 +126,6 @@ user. The response body will contain JSON containing an array of games, e.g.:
 }
 ```
 
-If the `over` query parameter is specified the results will be restricted
- accordingly.
-
 If there are no games associated with the user, the response body will contain
  an empty games array, e.g.:
 
@@ -137,18 +134,6 @@ If there are no games associated with the user, the response body will contain
   "games": []
 }
 ```
-
-### Using The Over Option
-
-The optional `over` query parameter restricts the response to games with a
-matching `over` property. You should send a valid boolean value, as shown in
-the examples below.
-
-- End point to fetch all of a user's games: `/games`
-- End point to fetch all of a user's games that are over: `/games?over=true`
-- End point to fetch all of a user's games that are not over: `/games?over=false`
-
-> Note: **It is not required to utilize the `over` parameter for the project.**
 
 ## Show `GET /games/:id`
 

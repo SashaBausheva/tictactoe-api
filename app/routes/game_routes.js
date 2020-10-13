@@ -33,9 +33,7 @@ const router = express.Router()
 // INDEX
 // GET /games
 router.get('/games', requireToken, (req, res, next) => {
-  const query = { owner: req.user.id }
-  if (req.query.over !== undefined) query.over = req.query.over
-  Game.find(query)
+  Game.find({ owner: req.user.id })
     .then(games => {
       // `games` will be an array of Mongoose documents
       // we want to convert each one to a POJO, so we use `.map` to
