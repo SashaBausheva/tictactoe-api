@@ -183,7 +183,7 @@ Request, and the response body will be JSON describing the errors.
 
 ## Update `PATCH /games/:id`
 
-To update a game, make a **POST** request to `/games/:id`.
+To update a game, make a **PATCH** request to `/games/:id`.
 
 ### Storing Board Index
 
